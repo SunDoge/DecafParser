@@ -25,7 +25,7 @@ public class Parser {
     }
 
     void error(String s) {
-        throw new Error("near line " + line + ": " + s);
+        throw new Error("near line " + lex.line + ": " + s);
     }
 
     void match(int t) throws IOException {

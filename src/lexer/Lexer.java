@@ -126,6 +126,13 @@ public class Lexer {
             case '*':
                 readch();
                 return new Token('*');
+            case '@':
+            case '^':
+            case '~':
+            case '#':
+            case ':':
+            case '`':
+                error("undefined symbol "+peek);
         }
         if (Character.isDigit(peek)) {
             int v = 0;
@@ -178,9 +185,9 @@ public class Lexer {
         this.peek = peek;
     }
 
-//    public void error(String s) {
-//        throw new Error("near line " + line + ": " + s);
-//    }
+    public void error(String s) {
+        throw new Error("near line " + line + ": " + s);
+    }
 
 
 
