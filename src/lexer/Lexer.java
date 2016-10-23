@@ -70,9 +70,14 @@ public class Lexer {
                 continue;
             else if (peek == '\n') {
                 line += 1;
-            } else if (peek == '/' && readch('/')) {
-                while (!readch('\n')) {
-                }
+            } else if (peek == '/') {
+                readch();
+                if (peek == '/')
+                    while (!readch('\n')) {
+                    }
+                else if (peek == '*')
+                    while (!readch('*') || !readch('/')) {
+                    }
             } else {
                 break;
             }
@@ -109,12 +114,18 @@ public class Lexer {
                     return Word.ge;
                 else
                     return new Token('>');
-//            case '/':
-//                if (readch('/')){
-//                    line += 1;
-//                }
-//                else
-//                    return new Token('/');
+            case '/':
+                readch();
+                return new Token('/');
+            case '+':
+                readch();
+                return new Token('+');
+            case '-':
+                readch();
+                return new Token('-');
+            case '*':
+                readch();
+                return new Token('*');
         }
         if (Character.isDigit(peek)) {
             int v = 0;
@@ -166,5 +177,11 @@ public class Lexer {
     public void setPeek(char peek) {
         this.peek = peek;
     }
+
+//    public void error(String s) {
+//        throw new Error("near line " + line + ": " + s);
+//    }
+
+
 
 }
